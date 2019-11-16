@@ -20,25 +20,33 @@ widths = [
     11, # date
 ]
 
+# read source data
 test_data = pd.read_fwf("data/fixed_width.txt", widths=widths)
 print('orig dataset')
 print(test_data)
 
+# data verification
 errors = schema.validate(test_data)
 
+# print verification errors to console
 print('validation errors in dataset')
 for error in errors:
     print(error)
 
+# filtering out invalid rows
 errors_index_rows = [e.row for e in errors]
-
 data_clean = test_data.drop(index=errors_index_rows)
+data_error = test_data.reindex(index=errors_index_rows)
 
 # save data to file
-pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/errors.csv', index=False)
-data_clean.to_csv('data/clean_data.csv', index=False)
+pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/error_report.txt', index=False)
+data_clean.to_csv('data/clean_data.txt', index=False)
+data_error.to_csv('data/error_data.txt', index=False)
 
-print('good dataset')
+print('valid records')
 print(data_clean)
 
+
+print('invalid records')
+print(data_error)
 
