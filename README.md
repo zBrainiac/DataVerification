@@ -1,7 +1,8 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zBrainiac_DataVerification&metric=alert_status)](https://sonarcloud.io/dashboard?id=zBrainiac_DataVerification)  
 
 
 
-Original test data set:
+### Original test data set stored in: _data/fixed_width.txt_
 ```python
 name     title              salary sex date
 Ryxlar   Chief Dragon Slayer20000  M   2019-01-31
@@ -11,7 +12,7 @@ Mr PotatoMess Cook          35000  M   2019-0231
 ```
 
 
-
+### Console output:
 ```python
 orig dataset
         name                title  salary sex        date
