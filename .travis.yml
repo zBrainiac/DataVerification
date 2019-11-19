@@ -11,4 +11,4 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  -panda_schema.py
+  python3 panda_schema.py
