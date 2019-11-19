@@ -1,7 +1,10 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zBrainiac_DataVerification&metric=alert_status)](https://sonarcloud.io/dashboard?id=zBrainiac_DataVerification)  
+### Project status
 
-
-
+Quality Gate | Status |
+--- | --- |
+Source Code:| [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zBrainiac_DataVerification&metric=alert_status)](https://sonarcloud.io/dashboard?id=zBrainiac_DataVerification) |
+Build | [![Build Status](https://travis-ci.com/zBrainiac/DataVerification.svg?branch=master)](https://travis-ci.com/zBrainiac/DataVerification) |
+  
 ### Original test data set stored in: _data/fixed_width.txt_
 ```python
 name     title              salary sex date
