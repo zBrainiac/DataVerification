@@ -11,8 +11,8 @@ from pandas_schema.validation import InRangeValidation, DateFormatValidation, Ma
 start_time = time.time()
 
 schema = Schema([
-    Column('key', [MatchesPatternValidation(r'^-?\d{1,16}$')]),       # Number / integer - up to 16
-    Column('sensor_id', [MatchesPatternValidation(r'^-?\d{1,16}$')]), # Number / integer - up to 16
+    Column('key', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
+    Column('sensor_id', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
     Column('location', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
     Column('lat', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),  # Number / decimal with up to 16 decimal place
     Column('lon', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),  # Number / decimal with up to 16 decimal place
@@ -36,16 +36,23 @@ errors_index_rows = [e.row for e in errors]
 data_clean = test_data.drop(index=errors_index_rows)
 data_error = test_data.reindex(index=errors_index_rows)
 
+# manipulating column type ('object' -> 'int')
+data_clean.sensor_id = data_clean.sensor_id.astype(int)
+
 print('valid raw records:')
 print(data_clean)
 # execution time
 print("--- %s 'Data Cleansing' in seconds ---" % (time.time() - start_time))
 
 ### ETL process
+
 start_time = time.time()
 data_clean_etl = data_clean.assign(temperature_f=lambda x: x.temperature * 9 / 5 + 32,
                                    temperature_k=lambda x: (x['temperature_f'] + 459.67) * 5 / 9
                                    )
+# via function
+f = lambda x: x * 2
+data_clean_etl['2mal'] = data_clean_etl['temperature_k'].apply(f)
 
 print('ETL output:')
 print(data_clean_etl)
@@ -60,3 +67,11 @@ data_clean_etl.to_csv('data/clean_data_etl.txt', index=False)
 data_error.to_csv('data/error_data.txt', index=False)
 # execution time
 print("--- %s 'save data to file' in seconds ---" % (time.time() - start_time))
+
+### some details
+# data frame info:
+data_clean_etl.info()
+
+# correlation between columns
+df = data_clean_etl[['location', 'lat', 'lon', 'timestamp', 'pressure', 'temperature', 'humidity']].corr()
+print(df)
