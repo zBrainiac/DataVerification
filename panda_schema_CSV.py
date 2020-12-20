@@ -9,16 +9,21 @@ from pandas_schema.validation import InRangeValidation, DateFormatValidation, Ma
 
 start_time = time.time()
 
+pattern_id = r'^-?\d{1,16}$'
+pattern_dec = r'^-?\d*\.\d{1,2}$'
+pattern_geo = r'^-?\d*\.\d{1,16}$'
+
+
 schema = Schema([
-    Column('key', [MatchesPatternValidation(r'^-?\d{1,16}$')]),            # Number / integer - up to 16
-    Column('sensor_id', [MatchesPatternValidation(r'^-?\d{1,16}$')]),      # Number / integer - up to 16
-    Column('location', [MatchesPatternValidation(r'^-?\d{1,16}$')]),       # Number / integer - up to 16
-    Column('lat', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),       # Number / decimal with up to 16 decimal place
-    Column('lon', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),       # Number / decimal with up to 16 decimal place
+    Column('key', [MatchesPatternValidation(pattern_id)]),            # Number / integer - up to 16
+    Column('sensor_id', [MatchesPatternValidation(pattern_id)]),      # Number / integer - up to 16
+    Column('location', [MatchesPatternValidation(pattern_id)]),       # Number / integer - up to 16
+    Column('lat', [MatchesPatternValidation(pattern_geo)]),       # Number / decimal with up to 16 decimal place
+    Column('lon', [MatchesPatternValidation(pattern_geo)]),       # Number / decimal with up to 16 decimal place
     Column('timestamp', [DateFormatValidation('%Y-%m-%dT%H:%M:%S')]),      # Timestamp yyyy-MM-dd'T'HH:mm:ss (in Zulu/UTC time zone) e.g. 2017-07-01T00:00:07
-    Column('pressure', [MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')]),   # Numbers / / decimal with 1 or 2 decimals (.00)
+    Column('pressure', [MatchesPatternValidation(pattern_dec)]),   # Numbers / / decimal with 1 or 2 decimals (.00)
     Column('temperature', [InRangeValidation(-146, 60), MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')]),  # Number / decimal with upto 2 decimal place
-    Column('humidity', [MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')])    # Numbers with 1 or 2 decimals (.00)
+    Column('humidity', [MatchesPatternValidation(pattern_dec)])    # Numbers with 1 or 2 decimals (.00)
 ])
 
 ### get data from File

@@ -5,28 +5,32 @@ from pandas_schema import Column, Schema
 from pandas_schema.validation import InRangeValidation, DateFormatValidation, MatchesPatternValidation
 
 ### raw data example
-# key       ,sensor_id ,location ,lat     ,lon       ,timestamp           ,pressure ,temperature  ,humidity
+# key       ,sensor_id ,location_id ,lat     ,lon       ,timestamp           ,pressure ,temperature  ,humidity
 # 1         ,2266      ,1140      ,42.738 ,23.272    ,2017-07-01T00:00:07 ,95270.27 ,23.46        ,62.48
 
 start_time = time.time()
 
+pattern_id = r'^-?\d{1,16}$'
+pattern_dec = r'^-?\d*\.\d{1,2}$'
+pattern_geo = r'^-?\d*\.\d{1,16}$'
+
 schema = Schema([
-    Column('key', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
-    Column('sensor_id', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
-    Column('location', [MatchesPatternValidation(r'^-?\d{1,16}$')]),  # Number / integer - up to 16
-    Column('lat', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),  # Number / decimal with up to 16 decimal place
-    Column('lon', [MatchesPatternValidation(r'^-?\d*\.\d{1,16}$')]),  # Number / decimal with up to 16 decimal place
+    Column('key', [MatchesPatternValidation(pattern_id)]),  # Number / integer - up to 16
+    Column('sensor_id', [MatchesPatternValidation(pattern_id)]),  # Number / integer - up to 16
+    Column('location', [MatchesPatternValidation(pattern_id)]),  # Number / integer - up to 16
+    Column('lat', [MatchesPatternValidation(pattern_geo)]),  # Number / decimal with up to 16 decimal place
+    Column('lon', [MatchesPatternValidation(pattern_geo)]),  # Number / decimal with up to 16 decimal place
     Column('timestamp', [DateFormatValidation('%Y-%m-%dT%H:%M:%S')]),
     # Timestamp yyyy-MM-dd'T'HH:mm:ss (in Zulu/UTC time zone) e.g. 2017-07-01T00:00:07
-    Column('pressure', [MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')]),
+    Column('pressure', [MatchesPatternValidation(pattern_dec)]),
     # Numbers / / decimal with 1 or 2 decimals (.00)
     Column('temperature', [InRangeValidation(-146, 60), MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')]),
     # Number / decimal with upto 2 decimal place
-    Column('humidity', [MatchesPatternValidation(r'^-?\d*\.\d{1,2}$')])  # Numbers with 1 or 2 decimals (.00)
+    Column('humidity', [MatchesPatternValidation(pattern_dec)])  # Numbers with 1 or 2 decimals (.00)
 ])
 
 ### get data from File
-test_data = pd.read_csv("data/testCSV_short.csv")
+test_data = pd.read_csv("data/testCSV.csv")
 
 ### Data Validation
 errors = schema.validate(test_data)
@@ -62,9 +66,9 @@ print("--- %s 'ETL process' in seconds ---" % (time.time() - start_time))
 ### save data to file
 start_time = time.time()
 pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/error_report.txt', index=False)
-data_clean.to_csv('data/clean_data.txt', index=False)
-data_clean_etl.to_csv('data/clean_data_etl.txt', index=False)
-data_error.to_csv('data/error_data.txt', index=False)
+data_clean.to_csv('data/output_clean_data.txt', index=False)
+data_clean_etl.to_csv('data/output_clean_data_etl.txt', index=False)
+data_error.to_csv('data/output_error_data.txt', index=False)
 # execution time
 print("--- %s 'save data to file' in seconds ---" % (time.time() - start_time))
 
