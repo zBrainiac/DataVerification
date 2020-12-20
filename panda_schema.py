@@ -39,7 +39,7 @@ data_clean = test_data.drop(index=errors_index_rows)
 data_error = test_data.reindex(index=errors_index_rows)
 
 # save data to file
-pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/error_report.txt', index=False)
+pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/output_error_report.txt', index=False)
 data_clean.to_csv('data/clean_data.txt', index=False)
 data_error.to_csv('data/error_data.txt', index=False)
 

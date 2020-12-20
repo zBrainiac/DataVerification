@@ -55,7 +55,7 @@ print("--- %s 'Data Cleansing' in seconds ---" % (time.time() - start_time))
 
 # save data to file
 start_time = time.time()
-pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/error_report.txt', index=False)
+pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/output_error_report.txt', index=False)
 data_clean.to_csv('data/clean_data.txt', index=False)
 data_error.to_csv('data/error_data.txt', index=False)
 # execution time
