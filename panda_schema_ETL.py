@@ -30,7 +30,7 @@ schema = Schema([
 ])
 
 ### get data from File
-test_data = pd.read_csv("data/testCSV.csv")
+test_data = pd.read_csv("data/testCSV_short.csv")
 
 ### Data Validation
 errors = schema.validate(test_data)
