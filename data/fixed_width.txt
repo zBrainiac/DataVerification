@@ -1,5 +1,0 @@
-name     title              salary sex date
-Ryxlar   Chief Dragon Slayer20000  M   2019-01-31
-Tiqla    Assistant Alchemist4000   F   2019-01-31
-Brynz    Brute Squad        1000   N   2019-01-31
-Mr PotatoMess Cook          35000  M   2019-0231

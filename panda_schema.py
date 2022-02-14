@@ -21,7 +21,7 @@ widths = [
 ]
 
 # read source data
-test_data = pd.read_fwf("data/fixed_width.txt", widths=widths)
+test_data = pd.read_fwf("data-input/fixed_width.txt", widths=widths)
 print('orig dataset')
 print(test_data)
 
@@ -39,9 +39,9 @@ data_clean = test_data.drop(index=errors_index_rows)
 data_error = test_data.reindex(index=errors_index_rows)
 
 # save data to file
-pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/output_error_report.txt', index=False)
-data_clean.to_csv('data/clean_data.txt', index=False)
-data_error.to_csv('data/error_data.txt', index=False)
+pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data-output/output_error_report.txt', index=False)
+data_clean.to_csv('data-output/clean_data.txt', index=False)
+data_error.to_csv('data-output/error_data.txt', index=False)
 
 print('valid records')
 print(data_clean)

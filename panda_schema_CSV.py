@@ -29,7 +29,7 @@ schema = Schema([
 ### get data from File
 print('load orig dataset from file')
 
-test_data = pd.read_csv("data/testCSV_short.csv")
+test_data = pd.read_csv("data-input/testCSV.csv")
 print('orig dataset')
 print(test_data)
 
@@ -55,9 +55,9 @@ print("--- %s 'Data Cleansing' in seconds ---" % (time.time() - start_time))
 
 # save data to file
 start_time = time.time()
-pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data/output_error_report.txt', index=False)
-data_clean.to_csv('data/clean_data.txt', index=False)
-data_error.to_csv('data/error_data.txt', index=False)
+pd.DataFrame({'DataValidationErrors:': errors}).to_csv('data-output/output_error_report.txt', index=False)
+data_clean.to_csv('data-output/clean_data.txt', index=False)
+data_error.to_csv('data-output/error_data.txt', index=False)
 # execution time
 print("--- %s 'save data to file' in seconds ---" % (time.time() - start_time))
 
