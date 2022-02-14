@@ -1,0 +1,4 @@
+DataValidationErrors:
+"{row: 2, column: ""sex""}: ""N"" is not in the list of legal options (F, M)"
+"{row: 3, column: ""salary""}: ""35000"" was not in the range [0, 33000)"
+"{row: 3, column: ""date""}: ""2019-0231"" does not match the date format string ""%Y-%m-%d"""
